@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
-import app from "./app";
 import { connectDB } from "./config/db";
 
 const envPath = path.resolve(__dirname, "../.env");
@@ -14,6 +13,7 @@ const rawUri = process.env.MONGO_URI || process.env.RAILWAY_MONGODB_URI || proce
 const uriDisplay = rawUri?.replace(/(mongodb(?:\+srv)?:\/\/)([^:]+):([^@]+)@/, "$1***:***@");
 console.log("Loaded MongoDB URI:", uriDisplay ?? "<not set>");
 
+const app = require("./app").default;
 const start = async () => {
   await connectDB();
 
