@@ -19,6 +19,11 @@ export const connectDB = async () => {
     console.error(
       "MongoDB connection failed: Missing MONGO_URI, RAILWAY_MONGODB_URI, or MONGODB_URI environment variable."
     );
+    console.error("Environment check:", {
+      MONGO_URI: !!process.env.MONGO_URI,
+      RAILWAY_MONGODB_URI: !!process.env.RAILWAY_MONGODB_URI,
+      MONGODB_URI: !!process.env.MONGODB_URI,
+    });
     process.exit(1);
   }
 

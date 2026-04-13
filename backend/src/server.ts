@@ -1,10 +1,14 @@
+import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import app from "./app";
 import { connectDB } from "./config/db";
 
 const envPath = path.resolve(__dirname, "../.env");
-dotenv.config({ path: envPath, override: true });
+const fallbackEnvPath = path.resolve(process.cwd(), "backend/.env");
+const configPath = fs.existsSync(envPath) ? envPath : fallbackEnvPath;
+
+dotenv.config({ path: configPath, override: true });
 
 const rawUri = process.env.MONGO_URI || process.env.RAILWAY_MONGODB_URI || process.env.MONGODB_URI;
 const uriDisplay = rawUri?.replace(/(mongodb(?:\+srv)?:\/\/)([^:]+):([^@]+)@/, "$1***:***@");
