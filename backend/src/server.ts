@@ -6,8 +6,9 @@ import { connectDB } from "./config/db";
 const envPath = path.resolve(__dirname, "../.env");
 dotenv.config({ path: envPath, override: true });
 
-const uriDisplay = process.env.MONGO_URI?.replace(/(mongodb(?:\+srv)?:\/\/)([^:]+):([^@]+)@/, "$1***:***@");
-console.log("Loaded MONGO_URI:", uriDisplay ?? "<not set>");
+const rawUri = process.env.MONGO_URI || process.env.RAILWAY_MONGODB_URI || process.env.MONGODB_URI;
+const uriDisplay = rawUri?.replace(/(mongodb(?:\+srv)?:\/\/)([^:]+):([^@]+)@/, "$1***:***@");
+console.log("Loaded MongoDB URI:", uriDisplay ?? "<not set>");
 
 const start = async () => {
   await connectDB();
